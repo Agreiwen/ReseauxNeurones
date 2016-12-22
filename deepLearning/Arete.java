@@ -1,4 +1,4 @@
-package modele;
+package deepLearning;
 
 public class Arete {
 	

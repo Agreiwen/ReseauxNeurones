@@ -1,4 +1,4 @@
-package modele;
+package deepLearning;
 
 public class Noeud {
 	
@@ -8,16 +8,6 @@ public class Noeud {
 	public Noeud(int id, String etiquette){
 		this.id = id;
 		this.etiquette = etiquette;
-	}
-	
-	public Noeud(Noeud n){
-		this.id = n.id;
-		this.etiquette = n.etiquette;
-	}
-	
-	public Noeud(int id){
-		this.id = id;
-		this.etiquette = "";
 	}
 	
 	public int getId(){
