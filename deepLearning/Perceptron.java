@@ -33,6 +33,15 @@ public class Perceptron{
 		return resultat;
 	}
 	
+	public List<Neurone> suivant(Neurone noeud) {
+		ArrayList<Neurone> resultat = new ArrayList<>();
+		for (Arete clef : listeArete) {
+			if(clef.getSource().equals(noeud))
+				resultat.add(clef.getDestination());
+		}
+		return resultat;
+	}
+	
 	public double potentielPostSynaptique(Neurone neurone){
 		double resultat = 0;
 		ArrayList<Neurone> precedent = (ArrayList<Neurone>) precedent(neurone);
