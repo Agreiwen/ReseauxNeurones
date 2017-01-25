@@ -23,7 +23,7 @@ public class MainClass {
 		ArrayList<Fleur> fleurs = new ArrayList<Fleur>();
 		br1 = new BufferedReader(new FileReader(fichier));
 
-		System.out.print("Lecture fichier... ");
+		System.out.println("Lecture fichier... ");
 		while ((st = br1.readLine()) != null) {
 			tailleBase++;
 		}
