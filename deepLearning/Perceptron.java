@@ -159,7 +159,32 @@ public class Perceptron{
 			}
 			
 		}
+		int nombreCoucheItermediaire = nombreCoucheItermediaire();
+		for (int i = nombreCoucheItermediaire; i >= 1; i--) {
+			for (Neurone neurone : listeNeurone) {
+				if(neurone.getClass().equals(NeuroneIntermediaire.class)){
+					NeuroneIntermediaire aux = (NeuroneIntermediaire) neurone;
+					if(aux.getCouche() == i)
+						miseAJourDelta(aux);
+				}
+			}
+		}
 		
+	}
+
+	private void miseAJourDelta(NeuroneIntermediaire aux) {
+		double somme = 0;
+		ArrayList<Neurone> suivant = (ArrayList<Neurone>) suivant(aux);
+		for (int i = 0; i < suivant.size(); i++) {
+			somme += getArete(aux, suivant.get(i)).getPoidsSynaptique()*suivant.get(i).getDelta();
+		}
+		double delta = deriveTanH(aux.getValeurSynaptique())*somme;
+		aux.setDelta(delta);
+		
+	}
+	
+	public double deriveTanH(double x){
+		return 1.0-(Math.tanh(x)*Math.tanh(x));
 	}
 
 	public void initialisationPoidsAleatoire(){
