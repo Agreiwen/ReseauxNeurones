@@ -223,6 +223,10 @@ public class MainClass {
 			/***********/
 			/** FAIRE **/
 			/***********/
+			test.propagationActivite();
+			
+			test.retropropagationErreur();
+			test.miseAJourPoids();
 		}
 		
 		
@@ -234,13 +238,14 @@ public class MainClass {
 		e3.setValeurSynaptique(0.13725490196078433);
 		e4.setValeurSynaptique(0.019607843137254905);
 
-		s1.setValeurAttendue(1);
+	/*	s1.setValeurAttendue(1);
 		s2.setValeurAttendue(0);
 		s3.setValeurAttendue(0);
-	
+	*/
 		test.propagationActivite();
 		System.out.println(test.toString() + "\n");
-		test.retropropagationErreur();
+		
+	//	System.out.println(test.toString() + "\n");
 		
 		/******************************/
 	}

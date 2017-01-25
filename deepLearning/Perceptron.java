@@ -183,6 +183,15 @@ public class Perceptron{
 		
 	}
 	
+	public void miseAJourPoids() {
+		double pasApp = 0.1;
+		for (Arete clef : listeArete) {
+			double newPoids = clef.getPoidsSynaptique()+pasApp*clef.getSource().getValeurSynaptique()*clef.getDestination().getDelta();
+			clef.setPoidsSynaptique(newPoids);
+		}
+		
+	}
+	
 	public double deriveTanH(double x){
 		return 1.0-(Math.tanh(x)*Math.tanh(x));
 	}
@@ -255,5 +264,7 @@ public class Perceptron{
 	public int nombreNoeuds() {
 		return listeNeurone.size();
 	}
+
+	
 
 }
