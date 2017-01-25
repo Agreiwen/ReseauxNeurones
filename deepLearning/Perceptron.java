@@ -184,7 +184,11 @@ public class Perceptron{
 	}
 	
 	public void miseAJourPoids() {
-		// TODO Auto-generated method stub
+		double pasApp = 0.1;
+		for (Arete clef : listeArete) {
+			double newPoids = clef.getPoidsSynaptique()+pasApp*clef.getSource().getValeurSynaptique()*clef.getDestination().getDelta();
+			clef.setPoidsSynaptique(newPoids);
+		}
 		
 	}
 	

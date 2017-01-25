@@ -241,6 +241,7 @@ public class MainClass {
 		test.propagationActivite();
 		
 		test.retropropagationErreur();
+		System.out.println(test.toString() + "\n");
 		test.miseAJourPoids();
 		System.out.println(test.toString() + "\n");
 		
