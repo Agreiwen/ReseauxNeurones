@@ -150,7 +150,16 @@ public class Perceptron{
 	
 	public void retropropagationErreur(){
 		double erreurPropagation = erreurPropagation();
-		System.out.println(erreurPropagation);
+		System.out.println("Erreur : "+erreurPropagation);
+		for (Neurone neurone : listeNeurone) {
+			if(neurone.getClass().equals(NeuroneSortie.class)){
+				NeuroneSortie neuroneSortie = (NeuroneSortie) neurone;
+				neuroneSortie.setDelta(neuroneSortie.getValeurAttendue()-erreurPropagation);
+				System.out.println("Delta : "+neuroneSortie.getDelta());
+			}
+			
+		}
+		
 	}
 
 	public void initialisationPoidsAleatoire(){

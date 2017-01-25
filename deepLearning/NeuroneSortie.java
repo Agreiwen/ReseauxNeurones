@@ -3,7 +3,7 @@ package deepLearning;
 public class NeuroneSortie extends Neurone{
 	
 	private double valeurAttendue;
-
+	
 	public NeuroneSortie(int id, String etiquette) {
 		super(id, etiquette);
 		this.valeurAttendue = 0;
