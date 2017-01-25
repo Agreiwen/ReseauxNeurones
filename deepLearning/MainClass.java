@@ -239,8 +239,10 @@ public class MainClass {
 		s3.setValeurAttendue(0);
 	
 		test.propagationActivite();
-		System.out.println(test.toString() + "\n");
+		
 		test.retropropagationErreur();
+		test.miseAJourPoids();
+		System.out.println(test.toString() + "\n");
 		
 		/******************************/
 	}

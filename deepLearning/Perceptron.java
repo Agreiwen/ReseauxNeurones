@@ -183,6 +183,11 @@ public class Perceptron{
 		
 	}
 	
+	public void miseAJourPoids() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public double deriveTanH(double x){
 		return 1.0-(Math.tanh(x)*Math.tanh(x));
 	}
@@ -255,5 +260,7 @@ public class Perceptron{
 	public int nombreNoeuds() {
 		return listeNeurone.size();
 	}
+
+	
 
 }
