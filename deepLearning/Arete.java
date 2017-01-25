@@ -2,36 +2,36 @@ package deepLearning;
 
 public class Arete {
 	
-	private Noeud source;
-	private Noeud destination;
-	private int poids;
+	private Neurone source;
+	private Neurone destination;
+	private double poidsSynaptique;
 	
-	public Arete(Noeud source, Noeud destination, int poids){
+	public Arete(Neurone source, Neurone destination, int poidsSynaptique){
 		this.source = source;
 		this.destination = destination;
-		this.poids = poids;
+		this.poidsSynaptique = poidsSynaptique;
 	}
 	
-	public Arete(Noeud source, Noeud destination){
+	public Arete(Neurone source, Neurone destination){
 		this.source = source;
 		this.destination = destination;
-		this.poids = 0;
+		this.poidsSynaptique = 1;
 	}
 	
-	public Noeud getSource(){
+	public Neurone getSource(){
 		return this.source;
 	}
 	
-	public Noeud getDestination(){
+	public Neurone getDestination(){
 		return this.destination;
 	}
 	
-	public int getPoids(){
-		return this.poids;
+	public double getPoidsSynaptique(){
+		return this.poidsSynaptique;
 	}
 	
-	public void setPoids(int poids){
-		this.poids = poids;
+	public void setPoidsSynaptique(double poids){
+		this.poidsSynaptique = poids;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Arete {
 		if(getClass() != obj.getClass())
 			return false;
 		Arete other = (Arete) obj;
-		if (this.poids != other.poids || this.destination != other.destination || this.source != other.source)
+		if (this.poidsSynaptique != other.poidsSynaptique || this.destination != other.destination || this.source != other.source)
 			return false;
 		return true;
 	}
@@ -51,13 +51,13 @@ public class Arete {
 	@Override
 	public int hashCode() {
 		final int prime = 7;
-		int result = prime * this.poids + this.source.getEtiquette().length() + this.destination.getEtiquette().length();
+		int result = (int) (prime * this.poidsSynaptique + this.source.getEtiquette().length() + this.destination.getEtiquette().length());
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "Arete["+this.source.getEtiquette()+", "+this.destination.getEtiquette()+", "+this.poids+"]";
+		return "Arete["+this.source.getEtiquette()+", "+this.destination.getEtiquette()+", "+this.poidsSynaptique+"]";
 	}
 
 	

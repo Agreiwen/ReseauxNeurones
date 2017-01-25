@@ -1,13 +1,21 @@
 package deepLearning;
 
-public class Noeud {
+public class Neurone {
 	
 	private final int id;
 	private String etiquette;
+	private double valeurSynaptique;
 	
-	public Noeud(int id, String etiquette){
+	public Neurone(int id, String etiquette){
 		this.id = id;
 		this.etiquette = etiquette;
+		this.valeurSynaptique = 0;
+	}
+	
+	public Neurone(int id, String etiquette, double valeurSynaptique){
+		this.id = id;
+		this.etiquette = etiquette;
+		this.valeurSynaptique = valeurSynaptique;
 	}
 	
 	public int getId(){
@@ -21,7 +29,15 @@ public class Noeud {
 	public void setEtiquette(String etiquette){
 		this.etiquette = etiquette;
 	}
-
+	
+	public double getValeurSynaptique(){
+		return this.valeurSynaptique;
+	}
+	
+	public void setValeurSynaptique(double valeurSynaptique){
+		this.valeurSynaptique = valeurSynaptique;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj)
@@ -30,7 +46,7 @@ public class Noeud {
 			return false;
 		if(getClass() != obj.getClass())
 			return false;
-		Noeud other = (Noeud) obj;
+		Neurone other = (Neurone) obj;
 		if (this.id != other.id || this.etiquette != other.etiquette)
 			return false;
 		return true;
@@ -45,7 +61,7 @@ public class Noeud {
 
 	@Override
 	public String toString() {
-		return "Noeud["+this.id+", "+this.etiquette+"]";
+		return "Noeud["+this.id+", "+this.etiquette+", "+this.valeurSynaptique+"]";
 	}
 	
 }
