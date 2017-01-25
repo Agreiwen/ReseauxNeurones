@@ -128,10 +128,16 @@ public class MainClass {
 		
 		System.out.println("Perceptron pret ("+test.nombreNoeuds()+" noeud(s) et "+test.nombreAretes()+" arete(s)).\n");
 		
+		
+		//set les 4 poids recupérés de la base IRIS pour chaque fleur
+		
 		e1.setValeurSynaptique(0.5);
 		e2.setValeurSynaptique(0.3431372549019608);
 		e3.setValeurSynaptique(0.13725490196078433);
 		e4.setValeurSynaptique(0.019607843137254905);
+		
+		
+		//differenciation la valeur attendue en fonction de la classe de chaque fleur 
 		
 		s1.setValeurAttendue(1);
 		s2.setValeurAttendue(0);
