@@ -33,6 +33,15 @@ public class Perceptron{
 		return resultat;
 	}
 	
+	public List<Neurone> suivant(Neurone noeud) {
+		ArrayList<Neurone> resultat = new ArrayList<>();
+		for (Arete clef : listeArete) {
+			if(clef.getSource().equals(noeud))
+				resultat.add(clef.getDestination());
+		}
+		return resultat;
+	}
+	
 	public double potentielPostSynaptique(Neurone neurone){
 		double resultat = 0;
 		ArrayList<Neurone> precedent = (ArrayList<Neurone>) precedent(neurone);
@@ -141,7 +150,41 @@ public class Perceptron{
 	
 	public void retropropagationErreur(){
 		double erreurPropagation = erreurPropagation();
-		System.out.println(erreurPropagation);
+		System.out.println("Erreur : "+erreurPropagation);
+		for (Neurone neurone : listeNeurone) {
+			if(neurone.getClass().equals(NeuroneSortie.class)){
+				NeuroneSortie neuroneSortie = (NeuroneSortie) neurone;
+				neuroneSortie.setDelta(neuroneSortie.getValeurAttendue()-erreurPropagation);
+				System.out.println("Delta : "+neuroneSortie.getDelta());
+			}
+			
+		}
+		int nombreCoucheItermediaire = nombreCoucheItermediaire();
+		for (int i = nombreCoucheItermediaire; i >= 1; i--) {
+			for (Neurone neurone : listeNeurone) {
+				if(neurone.getClass().equals(NeuroneIntermediaire.class)){
+					NeuroneIntermediaire aux = (NeuroneIntermediaire) neurone;
+					if(aux.getCouche() == i)
+						miseAJourDelta(aux);
+				}
+			}
+		}
+		
+	}
+
+	private void miseAJourDelta(NeuroneIntermediaire aux) {
+		double somme = 0;
+		ArrayList<Neurone> suivant = (ArrayList<Neurone>) suivant(aux);
+		for (int i = 0; i < suivant.size(); i++) {
+			somme += getArete(aux, suivant.get(i)).getPoidsSynaptique()*suivant.get(i).getDelta();
+		}
+		double delta = deriveTanH(aux.getValeurSynaptique())*somme;
+		aux.setDelta(delta);
+		
+	}
+	
+	public double deriveTanH(double x){
+		return 1.0-(Math.tanh(x)*Math.tanh(x));
 	}
 
 	public void initialisationPoidsAleatoire(){

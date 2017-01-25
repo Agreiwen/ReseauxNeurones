@@ -5,19 +5,30 @@ public class Neurone {
 	private final int id;
 	private String etiquette;
 	private double valeurSynaptique;
+	private double delta;
 	
 	public Neurone(int id, String etiquette){
 		this.id = id;
 		this.etiquette = etiquette;
 		this.valeurSynaptique = 0;
+		this.delta = 0;
 	}
 	
 	public Neurone(int id, String etiquette, double valeurSynaptique){
 		this.id = id;
 		this.etiquette = etiquette;
 		this.valeurSynaptique = valeurSynaptique;
+		this.delta = 0;
 	}
 	
+	public double getDelta() {
+		return delta;
+	}
+
+	public void setDelta(double delta) {
+		this.delta = delta;
+	}
+
 	public int getId(){
 		return id;
 	}
@@ -61,7 +72,7 @@ public class Neurone {
 
 	@Override
 	public String toString() {
-		return "Noeud["+this.id+", "+this.etiquette+", "+this.valeurSynaptique+"]";
+		return "Noeud["+this.id+", "+this.etiquette+", "+this.valeurSynaptique+","+this.delta+"]";
 	}
 	
 }
