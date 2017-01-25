@@ -185,6 +185,7 @@ public class MainClass {
 		// melange de la liste de fleurs
 		c.melanger(fleurs);
 		c.afficherFleurs(fleurs);
+		c.normaliser(fleurs);
 
 		test.initialisationPoidsAleatoire();
 		
@@ -261,6 +262,29 @@ public class MainClass {
 		Collections.shuffle(fleurs);
 		return nouvelle;
 
+	}
+	
+	public ArrayList<Fleur> normaliser(ArrayList<Fleur> fleurs){
+		double sommeLoS=0;
+		double sommeLaS=0;
+		double sommeLoP=0;
+		double sommeLaP=0;
+		
+		for(int i=0; i<fleurs.size(); i++){
+			sommeLoS += fleurs.get(i).longueurSepale;
+			sommeLaS += fleurs.get(i).largeurSpeale;
+			sommeLoP += fleurs.get(i).longueurPetale;
+			sommeLaP += fleurs.get(i).largeurPetale;
+		}
+		
+		for(int i=0;i<fleurs.size();i++){
+			fleurs.get(i).longueurSepale /= sommeLoS;
+			fleurs.get(i).largeurSpeale /= sommeLaS;
+			fleurs.get(i).longueurPetale /= sommeLoP;
+			fleurs.get(i).largeurPetale /= sommeLaP;
+			
+		}
+		return fleurs;
 	}
 
 }
