@@ -72,7 +72,7 @@ public class Neurone {
 
 	@Override
 	public String toString() {
-		return "Noeud["+this.id+", "+this.etiquette+", "+this.valeurSynaptique+","+this.delta+"]";
+		return "Noeud["+this.id+", "+this.etiquette+", "+this.valeurSynaptique+", "+this.delta+"]";
 	}
 	
 }
