@@ -295,6 +295,7 @@ public class MainClass {
 	 * @category apprentissage
 	 */
 	private void apprentissageReseau() {
+		System.out.print("Apprentissage...");
 		/*
 		 * Recuperation des neurones entree et sortie
 		 */
@@ -308,7 +309,8 @@ public class MainClass {
 
 		double erreurPropagationCourante = 0.9;
 		double erreurPropagationAvant = 1;
-		while (erreurPropagationAvant > erreurPropagationCourante) {
+		int compteur = 0;
+		while (erreurPropagationAvant > erreurPropagationCourante && erreurPropagationCourante > 0.1) {
 			erreurPropagationAvant = erreurPropagationCourante;
 			erreurPropagationCourante = 0;
 			// boucle principale d'exécution
@@ -347,8 +349,12 @@ public class MainClass {
 				perceptron.miseAJourPoids();
 			}
 			erreurPropagationCourante /= nombreFleurBaseApp;
+			compteur++;
+			if(compteur > 10000)
+				break;
 			//System.out.println(erreurPropagationAvant+" -> "+erreurPropagationCourante);
 		}
+		System.out.println(" Termine.\n");
 		System.out.println("Moyenne erreur propagation finale = " + erreurPropagationCourante + "\n");
 	}
 
@@ -478,7 +484,7 @@ public class MainClass {
 			e1.printStackTrace();
 		}
 		System.out.println("Projet Apprentissage Numerique - Perceptron Multi Couche\n");
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 50; i++) {
 			new MainClass();
 		}
 	}

@@ -175,7 +175,7 @@ public class Perceptron {
 			if (neurone.getClass().equals(NeuroneSortie.class)) {
 				NeuroneSortie neuroneSortie = (NeuroneSortie) neurone;
 				//neuroneSortie.setDelta(neuroneSortie.getValeurAttendue() - erreurPropagation);
-				neuroneSortie.setDelta(deriveLogistique(neuroneSortie.getValeurSynaptique())*(neuroneSortie.getValeurAttendue() - neuroneSortie.getValeurSynaptique()));
+				neuroneSortie.setDelta(deriveLogistique(potentielPostSynaptique(neuroneSortie))*(neuroneSortie.getValeurAttendue() - neuroneSortie.getValeurSynaptique()));
 				// System.out.println("Delta : "+neuroneSortie.getDelta());
 			}
 		}
@@ -198,7 +198,7 @@ public class Perceptron {
 		for (int i = 0; i < suivant.size(); i++) {
 			somme += getArete(aux, suivant.get(i)).getPoidsSynaptique() * suivant.get(i).getDelta();
 		}
-		double delta = deriveLogistique(aux.getValeurSynaptique()) * somme;
+		double delta = deriveLogistique(potentielPostSynaptique(aux)) * somme;
 		aux.setDelta(delta);
 
 	}
