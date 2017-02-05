@@ -13,8 +13,10 @@ public class MainClass {
 
 	ArrayList<Fleur> fleurs;
 	Perceptron perceptron;
-	int nombreFleurBaseApp = 50;
-
+	int nombreFleurBaseApp = 50; // le reste est dans la base de test
+	final static int NB_APPRENTISSAGE = 50;
+	double tauxBonneReco = 0;
+	
 	public MainClass() {
 		/*
 		 * Lecture du fichier IRIS
@@ -310,7 +312,8 @@ public class MainClass {
 		double erreurPropagationCourante = 0.9;
 		double erreurPropagationAvant = 1;
 		int compteur = 0;
-		while (erreurPropagationAvant > erreurPropagationCourante && erreurPropagationCourante > 0.1) {
+		//while (erreurPropagationAvant > erreurPropagationCourante && erreurPropagationCourante > 0.1) {
+		while (erreurPropagationCourante > 0.025) {
 			erreurPropagationAvant = erreurPropagationCourante;
 			erreurPropagationCourante = 0;
 			// boucle principale d'exécution
@@ -399,6 +402,7 @@ public class MainClass {
 		tauxBonneReconnaissance = (double) predictionCorrect
 				/ ((double) predictionCorrect + (double) predictionIncorrect);
 		System.out.println("Taux de bonne reconnaissance : " + tauxBonneReconnaissance * 100.0 + "%\n");
+		this.tauxBonneReco = tauxBonneReconnaissance;
 	}
 
 	/**
@@ -434,36 +438,6 @@ public class MainClass {
 	 * @return fleurs normalisees
 	 * @category initialisation
 	 */
-	private ArrayList<Fleur> normaliserColonne(ArrayList<Fleur> fleurs) {
-		double sommeLoS = 0;
-		double sommeLaS = 0;
-		double sommeLoP = 0;
-		double sommeLaP = 0;
-
-		for (int i = 0; i < fleurs.size(); i++) {
-			sommeLoS += fleurs.get(i).longueurSepale;
-			sommeLaS += fleurs.get(i).largeurSpeale;
-			sommeLoP += fleurs.get(i).longueurPetale;
-			sommeLaP += fleurs.get(i).largeurPetale;
-		}
-
-		for (int i = 0; i < fleurs.size(); i++) {
-			fleurs.get(i).longueurSepale /= sommeLoS;
-			fleurs.get(i).largeurSpeale /= sommeLaS;
-			fleurs.get(i).longueurPetale /= sommeLoP;
-			fleurs.get(i).largeurPetale /= sommeLaP;
-
-		}
-		return fleurs;
-	}
-
-	/**
-	 * normalise la base IRIS
-	 * 
-	 * @param fleurs
-	 * @return fleurs normalisees
-	 * @category initialisation
-	 */
 	private ArrayList<Fleur> normaliserLigne(ArrayList<Fleur> fleurs) {
 		double somme = 0;
 		for (int i = 0; i < fleurs.size(); i++) {
@@ -484,9 +458,16 @@ public class MainClass {
 			e1.printStackTrace();
 		}
 		System.out.println("Projet Apprentissage Numerique - Perceptron Multi Couche\n");
-		for (int i = 0; i < 50; i++) {
-			new MainClass();
+		double meilleurTauxReco = Double.MIN_VALUE;
+		String poidsPerceptron = "";
+		for (int i = 0; i < NB_APPRENTISSAGE; i++) {
+			MainClass mc = new MainClass();
+			if(mc.tauxBonneReco > meilleurTauxReco){
+				meilleurTauxReco = mc.tauxBonneReco;
+				poidsPerceptron = mc.perceptron.affichagePoids();
+			}
 		}
+		System.out.println(poidsPerceptron);
 	}
 
 }

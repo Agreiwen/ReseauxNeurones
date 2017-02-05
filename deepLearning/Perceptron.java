@@ -78,9 +78,25 @@ public class Perceptron {
 	public double deriveLogistique(double x) {
 		return logistique(x) * (1.0 - logistique(x));
 	}
-
-	public double fonctionActivation(double x) {
+	
+	public double relu(double x){
+		return Math.log(1 + Math.exp(x));
+	}
+	
+	public double deriveRelu(double x){
 		return logistique(x);
+	}
+
+	public double fonctionActivation(double x, Neurone neurone) {
+		double activation = 0;
+		if (neurone.getClass().equals(NeuroneIntermediaire.class)) {
+			NeuroneIntermediaire aux = (NeuroneIntermediaire) neurone;
+			if(aux.getCouche() == 1 || aux.getCouche() == 2 || aux.getCouche() == 3)
+				activation = relu(x);
+			if(aux.getCouche() == 4)
+				activation = tangenteHyperbolique(x);
+		}
+		return activation;
 	}
 
 	public int nombreCoucheItermediaire() {
@@ -97,7 +113,7 @@ public class Perceptron {
 
 	public void miseAJourNeurone(Neurone neurone) {
 		double potentielPostSynaptique = potentielPostSynaptique(neurone);
-		neurone.setValeurSynaptique(fonctionActivation(potentielPostSynaptique));
+		neurone.setValeurSynaptique(fonctionActivation(potentielPostSynaptique, neurone));
 		//System.out.println("Potentiel post synaptique : "+potentielPostSynaptique);
 		//System.out.println("Valeur synaptique neurone "+neurone.getEtiquette()+" : "+fonctionActivation(potentielPostSynaptique)+"\n");
 	}
@@ -133,8 +149,8 @@ public class Perceptron {
 		double denominateurSoftMax = denominateurSoftMax();
 		for (Neurone neurone : listeNeurone) {
 			if (neurone.getClass().equals(NeuroneSortie.class))
-				miseAJourNeurone(neurone);
-				//neurone.setValeurSynaptique(softMax(neurone, denominateurSoftMax));
+				//miseAJourNeurone(neurone);
+				neurone.setValeurSynaptique(softMax(neurone, denominateurSoftMax));
 		}
 	}
 
@@ -175,7 +191,7 @@ public class Perceptron {
 			if (neurone.getClass().equals(NeuroneSortie.class)) {
 				NeuroneSortie neuroneSortie = (NeuroneSortie) neurone;
 				//neuroneSortie.setDelta(neuroneSortie.getValeurAttendue() - erreurPropagation);
-				neuroneSortie.setDelta(deriveLogistique(potentielPostSynaptique(neuroneSortie))*(neuroneSortie.getValeurAttendue() - neuroneSortie.getValeurSynaptique()));
+				neuroneSortie.setDelta(deriveTanH(potentielPostSynaptique(neuroneSortie))*(neuroneSortie.getValeurAttendue() - neuroneSortie.getValeurSynaptique()));
 				// System.out.println("Delta : "+neuroneSortie.getDelta());
 			}
 		}
@@ -194,11 +210,15 @@ public class Perceptron {
 
 	public void miseAJourDelta(NeuroneIntermediaire aux) {
 		double somme = 0;
+		double delta = 0;
 		ArrayList<Neurone> suivant = (ArrayList<Neurone>) suivant(aux);
 		for (int i = 0; i < suivant.size(); i++) {
 			somme += getArete(aux, suivant.get(i)).getPoidsSynaptique() * suivant.get(i).getDelta();
 		}
-		double delta = deriveLogistique(potentielPostSynaptique(aux)) * somme;
+		if(aux.getCouche() == 1 || aux.getCouche() == 2 || aux.getCouche() == 3)
+			delta = deriveRelu(aux.getValeurSynaptique()) * somme;
+		if(aux.getCouche() == 4)
+			delta = deriveTanH(aux.getValeurSynaptique()) * somme;
 		aux.setDelta(delta);
 
 	}
@@ -231,6 +251,15 @@ public class Perceptron {
 		sb.append(listeNeurone.toString());
 		sb.append("\n");
 		sb.append(listeArete.toString());
+		return sb.toString();
+	}
+	
+	public String affichagePoids(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Poids appris par le reseau lors du meilleur apprentissage :\n\n");
+		for (int i = 0; i < listeArete.size(); i++) {
+			sb.append("Poids-Arrete["+listeArete.get(i).getSource().getEtiquette()+","+listeArete.get(i).getDestination().getEtiquette()+"] : "+listeArete.get(i).getPoidsSynaptique()+"\n");
+		}
 		return sb.toString();
 	}
 
