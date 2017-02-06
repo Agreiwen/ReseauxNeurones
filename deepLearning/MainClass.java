@@ -11,11 +11,12 @@ import java.util.Collections;
 
 public class MainClass {
 
-	ArrayList<Fleur> fleurs;
-	Perceptron perceptron;
-	int nombreFleurBaseApp = 50; // le reste est dans la base de test
-	final static int NB_APPRENTISSAGE = 50;
-	double tauxBonneReco = 0;
+	private ArrayList<Fleur> fleurs;
+	private Perceptron perceptron;
+	private double tauxBonneReco = 0;
+	final static int NB_FLEURS_BASE_APP = 50; // le reste est dans la base de test
+	final static int NB_APPRENTISSAGE = 10;
+	final static double CRITERE_ARRET = 0.025;
 	
 	public MainClass() {
 		/*
@@ -311,13 +312,12 @@ public class MainClass {
 
 		double erreurPropagationCourante = 0.9;
 		double erreurPropagationAvant = 1;
-		int compteur = 0;
 		//while (erreurPropagationAvant > erreurPropagationCourante && erreurPropagationCourante > 0.1) {
-		while (erreurPropagationCourante > 0.025) {
+		while (erreurPropagationAvant > erreurPropagationCourante && erreurPropagationCourante > CRITERE_ARRET) {
 			erreurPropagationAvant = erreurPropagationCourante;
 			erreurPropagationCourante = 0;
 			// boucle principale d'exécution
-			for (int i = 0; i < nombreFleurBaseApp; i++) {
+			for (int i = 0; i < NB_FLEURS_BASE_APP; i++) {
 				// set des neurones d'entrée
 				entree1.setValeurSynaptique(fleurs.get(i).longueurSepale);
 				entree2.setValeurSynaptique(fleurs.get(i).largeurSpeale);
@@ -347,14 +347,12 @@ public class MainClass {
 				}
 				perceptron.propagationActivite();
 				// System.out.println(perceptron.toString()+"\n");
+				//System.out.println(perceptron.erreurPropagation());
 				erreurPropagationCourante += perceptron.erreurPropagation();
 				perceptron.retropropagationErreur();
 				perceptron.miseAJourPoids();
 			}
-			erreurPropagationCourante /= nombreFleurBaseApp;
-			compteur++;
-			if(compteur > 10000)
-				break;
+			erreurPropagationCourante = (double)((double)erreurPropagationCourante/(double)NB_FLEURS_BASE_APP);
 			//System.out.println(erreurPropagationAvant+" -> "+erreurPropagationCourante);
 		}
 		System.out.println(" Termine.\n");
@@ -378,7 +376,7 @@ public class MainClass {
 		int predictionIncorrect = 0;
 		StringBuilder sb;
 		double tauxBonneReconnaissance = 0;
-		for (int i = nombreFleurBaseApp; i < fleurs.size(); i++) {
+		for (int i = NB_FLEURS_BASE_APP; i < fleurs.size(); i++) {
 			sb = new StringBuilder();
 			entree1.setValeurSynaptique(fleurs.get(i).longueurSepale);
 			entree2.setValeurSynaptique(fleurs.get(i).largeurSpeale);

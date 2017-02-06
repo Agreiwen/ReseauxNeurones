@@ -1,11 +1,8 @@
 package deepLearning;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class Perceptron {
 
@@ -25,7 +22,7 @@ public class Perceptron {
 		listeNeurone.add(noeud);
 	}
 
-	public List<Neurone> precedent(Neurone noeud) {
+	private List<Neurone> precedent(Neurone noeud) {
 		ArrayList<Neurone> resultat = new ArrayList<>();
 		for (Arete clef : listeArete) {
 			if (clef.getDestination().equals(noeud))
@@ -34,7 +31,7 @@ public class Perceptron {
 		return resultat;
 	}
 
-	public List<Neurone> suivant(Neurone noeud) {
+	private List<Neurone> suivant(Neurone noeud) {
 		ArrayList<Neurone> resultat = new ArrayList<>();
 		for (Arete clef : listeArete) {
 			if (clef.getSource().equals(noeud))
@@ -43,7 +40,7 @@ public class Perceptron {
 		return resultat;
 	}
 
-	public double potentielPostSynaptique(Neurone neurone) {
+	private double potentielPostSynaptique(Neurone neurone) {
 		double resultat = 0;
 		//System.out.println("Je suis : "+neurone.getEtiquette());
 		ArrayList<Neurone> precedent = (ArrayList<Neurone>) precedent(neurone);
@@ -58,7 +55,7 @@ public class Perceptron {
 		return resultat;
 	}
 
-	public Arete getArete(Neurone source, Neurone destination) {
+	private Arete getArete(Neurone source, Neurone destination) {
 		Arete resultat = null;
 		for (Arete arete : listeArete) {
 			if (arete.getSource().equals(source) && arete.getDestination().equals(destination))
@@ -67,27 +64,29 @@ public class Perceptron {
 		return resultat;
 	}
 
-	public double tangenteHyperbolique(double x) {
+	private double tangenteHyperbolique(double x) {
+		System.out.println("tanH : "+Math.tanh(x));
 		return Math.tanh(x);
 	}
 
-	public double logistique(double x) {
+	private double logistique(double x) {
 		return 1.0 / (1.0 + Math.exp(-x));
 	}
 
-	public double deriveLogistique(double x) {
+	private double deriveLogistique(double x) {
 		return logistique(x) * (1.0 - logistique(x));
 	}
 	
-	public double relu(double x){
-		return Math.log(1 + Math.exp(x));
+	private double relu(double x){
+		System.out.println("ReLU : "+Math.log(1.0 + Math.exp(x)));
+		return Math.log(1.0 + Math.exp(x));
 	}
 	
-	public double deriveRelu(double x){
+	private double deriveRelu(double x){
 		return logistique(x);
 	}
 
-	public double fonctionActivation(double x, Neurone neurone) {
+	private double fonctionActivation(double x, Neurone neurone) {
 		double activation = 0;
 		if (neurone.getClass().equals(NeuroneIntermediaire.class)) {
 			NeuroneIntermediaire aux = (NeuroneIntermediaire) neurone;
@@ -99,7 +98,7 @@ public class Perceptron {
 		return activation;
 	}
 
-	public int nombreCoucheItermediaire() {
+	private int nombreCoucheItermediaire() {
 		int resultat = 0;
 		for (Neurone neurone : listeNeurone) {
 			if (neurone.getClass().equals(NeuroneIntermediaire.class)) {
@@ -111,18 +110,18 @@ public class Perceptron {
 		return resultat;
 	}
 
-	public void miseAJourNeurone(Neurone neurone) {
+	private void miseAJourNeurone(Neurone neurone) {
 		double potentielPostSynaptique = potentielPostSynaptique(neurone);
 		neurone.setValeurSynaptique(fonctionActivation(potentielPostSynaptique, neurone));
 		//System.out.println("Potentiel post synaptique : "+potentielPostSynaptique);
 		//System.out.println("Valeur synaptique neurone "+neurone.getEtiquette()+" : "+fonctionActivation(potentielPostSynaptique)+"\n");
 	}
 
-	public double numerateurSoftMax(Neurone neurone) {
+	private double numerateurSoftMax(Neurone neurone) {
 		return Math.exp(potentielPostSynaptique(neurone));
 	}
 
-	public double denominateurSoftMax() {
+	private double denominateurSoftMax() {
 		double resultat = 0;
 		for (Neurone neurone : listeNeurone) {
 			if (neurone.getClass().equals(NeuroneSortie.class))
@@ -131,7 +130,7 @@ public class Perceptron {
 		return resultat;
 	}
 
-	public double softMax(Neurone neurone, double denominateur) {
+	private double softMax(Neurone neurone, double denominateur) {
 		return numerateurSoftMax(neurone) / denominateur;
 	}
 
@@ -158,7 +157,7 @@ public class Perceptron {
 		return erreurQuadratique();
 	}
 
-	public double entropieRelative() {
+	private double entropieRelative() {
 		double erreur = 0;
 		for (Neurone neurone : listeNeurone) {
 			if (neurone.getClass().equals(NeuroneSortie.class)) {
@@ -171,7 +170,7 @@ public class Perceptron {
 		return erreur;
 	}
 
-	public double erreurQuadratique() {
+	private double erreurQuadratique() {
 		double erreur = 0;
 		for (Neurone neurone : listeNeurone) {
 			if (neurone.getClass().equals(NeuroneSortie.class)) {
@@ -208,7 +207,7 @@ public class Perceptron {
 
 	}
 
-	public void miseAJourDelta(NeuroneIntermediaire aux) {
+	private void miseAJourDelta(NeuroneIntermediaire aux) {
 		double somme = 0;
 		double delta = 0;
 		ArrayList<Neurone> suivant = (ArrayList<Neurone>) suivant(aux);
@@ -233,7 +232,7 @@ public class Perceptron {
 
 	}
 
-	public double deriveTanH(double x) {
+	private double deriveTanH(double x) {
 		return 1.0 - (Math.tanh(x) * Math.tanh(x));
 	}
 
@@ -263,50 +262,11 @@ public class Perceptron {
 		return sb.toString();
 	}
 
-	/*
-	 * -------------------------------------------------------------------------
-	 * -----------------------------------
-	 */
-
-	public boolean contientArete(Arete arete) {
-		boolean resultat = false;
-		for (Arete clef : listeArete) {
-			if (clef.equals(arete))
-				resultat = true;
-		}
-		return resultat;
-	}
-
-	public boolean contientNoeud(Neurone noeud) {
-		boolean resultat = false;
-		for (Neurone clef : listeNeurone) {
-			if (clef.equals(noeud))
-				resultat = true;
-		}
-		return resultat;
-	}
-
-	public List<Arete> getAretes() {
-		return listeArete;
-	}
-
 	public Neurone getNoeud(int noeudId) {
 		Neurone resultat = null;
 		for (Neurone clef : listeNeurone) {
 			if (clef.getId() == noeudId)
 				resultat = clef;
-		}
-		return resultat;
-	}
-
-	public Collection<Neurone> getNoeuds() {
-		return listeNeurone;
-	}
-
-	public Set<Integer> getNoeudIds() {
-		Set<Integer> resultat = new HashSet<Integer>();
-		for (Neurone clef : listeNeurone) {
-			resultat.add(clef.getId());
 		}
 		return resultat;
 	}
