@@ -259,7 +259,8 @@ public class Perceptron {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Poids appris par le reseau lors de son apprentissage :\n\n");
 		for (int i = 0; i < listeArete.size(); i++) {
-			sb.append("Poids-Arrete["+listeArete.get(i).getSource().getEtiquette()+","+listeArete.get(i).getDestination().getEtiquette()+"] : "+listeArete.get(i).getPoidsSynaptique()+"\n");
+			sb.append("Poids-Arrete["+listeArete.get(i).getSource().getEtiquette()+","+listeArete.get(i).getDestination().getEtiquette()+"] : "+listeArete.get(i).getPoidsSynaptique());
+			sb.append("\n");
 		}
 		return sb.toString();
 	}
