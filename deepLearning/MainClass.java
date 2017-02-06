@@ -455,16 +455,20 @@ public class MainClass {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("Projet Apprentissage Numerique - Perceptron Multi Couche\n");
+		System.out.println("Projet Apprentissage Numerique - Perceptron Multi Couche et Filtre\n");
 		double meilleurTauxReco = Double.MIN_VALUE;
 		String poidsPerceptron = "";
 		for (int i = 0; i < NB_APPRENTISSAGE; i++) {
+			System.out.println("**********************************************************************************");
+			System.out.println("Apprentissage #"+(i+1)+" :\n");
 			MainClass mc = new MainClass();
 			if(mc.tauxBonneReco > meilleurTauxReco){
 				meilleurTauxReco = mc.tauxBonneReco;
 				poidsPerceptron = mc.perceptron.affichagePoids();
 			}
 		}
+		System.out.println("**********************************************************************************");
+		System.out.println("Taux de reconnaissance du reseau choisi : "+meilleurTauxReco*100+"%\n");
 		System.out.println(poidsPerceptron);
 	}
 

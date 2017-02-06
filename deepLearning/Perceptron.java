@@ -65,7 +65,7 @@ public class Perceptron {
 	}
 
 	private double tangenteHyperbolique(double x) {
-		System.out.println("tanH : "+Math.tanh(x));
+		//System.out.println("tanH : "+Math.tanh(x));
 		return Math.tanh(x);
 	}
 
@@ -78,7 +78,7 @@ public class Perceptron {
 	}
 	
 	private double relu(double x){
-		System.out.println("ReLU : "+Math.log(1.0 + Math.exp(x)));
+		//System.out.println("ReLU : "+Math.log(1.0 + Math.exp(x)));
 		return Math.log(1.0 + Math.exp(x));
 	}
 	
@@ -175,11 +175,13 @@ public class Perceptron {
 		for (Neurone neurone : listeNeurone) {
 			if (neurone.getClass().equals(NeuroneSortie.class)) {
 				NeuroneSortie neuroneSortie = (NeuroneSortie) neurone;
+				//System.out.println(neuroneSortie.getValeurSynaptique());
 				erreur += (neuroneSortie.getValeurSynaptique() - neuroneSortie.getValeurAttendue())
 						* (neuroneSortie.getValeurSynaptique() - neuroneSortie.getValeurAttendue());
 			}
 		}
 		erreur = erreur * 0.5;
+		//System.out.println(erreur);
 		return erreur;
 	}
 
@@ -255,7 +257,7 @@ public class Perceptron {
 	
 	public String affichagePoids(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("Poids appris par le reseau lors du meilleur apprentissage :\n\n");
+		sb.append("Poids appris par le reseau lors de son apprentissage :\n\n");
 		for (int i = 0; i < listeArete.size(); i++) {
 			sb.append("Poids-Arrete["+listeArete.get(i).getSource().getEtiquette()+","+listeArete.get(i).getDestination().getEtiquette()+"] : "+listeArete.get(i).getPoidsSynaptique()+"\n");
 		}
